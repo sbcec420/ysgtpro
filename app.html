@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+
+  <style>
+  *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: সাবির ২ UNICODE;
+  }
+  
+  @font-face {
+    font-family: রাজন শৈলী UNICODE;
+    src: url('রাজন শৈলী UNICODE.ttf');
+  }
+  
+  @font-face {
+    font-family: সাবির ২ UNICODE;
+    src:url("সাবির ২ UNICODE.ttf");
+  }
+  
+  
+  body {
+    font-family:Arial,sans-serif;
+    background:#1e1e1e;
+    color:#fff;
+  }
+  
+  .nav-bar {
+    width:100%;
+    height:60px;
+    border:1px solid red;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    background:linear-gradient(to right,orange,white,green);
+    position:sticky;
+    top:0;
+    z-index:2;
+  }
+  
+  #menu { display:none; }
+  
+  .nav-logo {
+    height:58px;
+    width:58px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:50%;
+    position:absolute;
+    right:50%;
+    transform:translateX(50%);
+  }
+  
+  .nav-logo img{
+    height:54px;
+    width:54px;
+    border-radius:50%;
+  }
+  
+  .menu-icon {
+    font-size:50px;
+    transition:0.3s;
+    margin-right:15px;
+  }
+ 
+  .menu-icon::before{ content:"≡"; }
+ 
+  #menu:checked + .nav-bar .menu-icon::before{
+    content:"×";
+  }
+ 
+  .slider {
+    height:100%;
+    width:180px;
+    background-color:white;
+    position:fixed;
+    right:-310px;
+    z-index:2;
+    transition:0.4s ease;
+  }
+ 
+  .slider ul { list-style:none; }
+ 
+  .slider ul li{
+    height:44px;
+    width:100%;
+    display:flex;
+    align-items:center;
+    border-bottom:1px solid green;
+  }
+  .slider ul li:hover {
+    background-color:fuchsia;
+    color:orange;
+  }
+ 
+  .slider ul li a{
+    width:100%;
+    height:100%;
+    color:purple;
+    text-decoration:none;
+    font-weight:bolder;
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    margin-left:18px;
+  }
+ 
+  #menu:checked ~ .slider { right:0; }
+ 
+  .big-checkbox{
+    height:100%;
+    width:100%;
+    background:rgba(0,0,0,0.6);
+    position:fixed;
+    top:0;
+    left:0;
+    visibility:hidden;
+    z-index:1;
+  }
+ 
+  #menu:checked ~ .big-checkbox { visibility:visible; }
+ 
+  h2{
+    margin:0;
+    padding:0;
+    text-align:center;
+    letter-spacing:45px;
+    padding-left:50px;
+  }
+ 
+  .styling {
+    text-align:center;
+    margin:0;
+    padding:0;
+    font-size:12px;
+    font-family:cursive;
+    word-spacing:33px;
+    margin-top:-8px;
+  }
+ 
+  .details {
+    border:1.6px solid orange;
+    border-bottom-left-radius:37px;
+    border-top-right-radius:37px;
+    display:flex;
+    justify-content:flex-start;
+    padding:8px;
+    gap:6px;
+    margin-bottom:8px;
+  }
+ 
+  .features { margin:15px; }
+
+  .subject-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 15px;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .subject-box {
+    width: 150px;
+    height: 65px;
+    background: linear-gradient(to right, #ff8c00, #ff4500);
+    color: white;
+    font-weight: bold;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 14px;
+    box-shadow: 2px 3px 15px #ff7f50;
+    transition: 0.3s ease;
+    border: 1.5px solid white;
+  }
+
+  .subject-box:hover {
+    transform: scale(1.08);
+    box-shadow: 2px 3px 25px yellow;
+  }
+
+  .math { background: linear-gradient(45deg, #ff0000, #ff6600); }
+  .reasoning { background: linear-gradient(45deg, #008080, #00ced1); }
+  .polity { background: linear-gradient(45deg, #4b0082, #8a2be2); }
+  .history { background: linear-gradient(45deg, #993300, #ff6600); }
+  .geography { background: linear-gradient(45deg, #228b22, #32cd32); }
+  .gk { background: linear-gradient(45deg, #0066cc, #00bfff); }
+
+  footer {
+    width: 100%;
+    height: auto;
+    position: static;
+    background: linear-gradient(to right, #00093c, #2d0b00);
+    color: #fff;
+    border-top-left-radius: 70px;
+    font-size: 13px;
+    line-height: 15px;
+  }
+ 
+  .row {
+    width: 93%;
+    margin:auto;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:13px;
+    padding:10px;
+  }
+ 
+  .col { padding-left:9px; height:120px; width:150px; }
+ 
+  .col h3 {
+    color: orange;
+    width: fit-content;
+    margin-bottom: 20px;
+    margin-top:5px;
+    position: relative;
+    font-size: 17px;
+    font-weight: bolder;
+  }
+
+  .col p{ font-size:11px; line-height:13px; margin-bottom:1px; }
+ 
+  .logo {
+    height: 73px;
+    width: 118px;
+    border-radius:5px;
+    margin-top: 10px;
+    margin-left:3px;
+  }
+ 
+  .underline {
+    width: 100%;
+    height: 5px;
+    background: olive;
+    border-radius: 3px;
+    position: absolute;
+    overflow: hidden;
+    margin-top:6px;
+  }
+ 
+  .underline span {
+    width: 15px;
+    height: 100%;
+    background: linear-gradient(to right, orange, white,green );
+    border-radius: 3px;
+    position: absolute;
+    animation: moving 1.87s linear infinite alternate;
+  }
+ 
+  @keyframes moving {
+    0% {left: -40%;}
+    100% {left: 120%;}
+  }
+ 
+  .location { height: 11.5px; }
+  .mobile { height: 11px; }
+  .youtube {
+    height: 27px;
+    width:27px;
+    font-size:30px;
+    margin-top: 10px;
+    margin-right: 12px;
+    box-shadow: 3px 5px 10px white;
+    border-radius: 50%;
+  }
+  .email { height: 9.3px; padding-top:2px; }
+  .copyright{ font-size:11px; word-spacing:3px; margin-top:-15px; }
+  </style>
+</head>
+
+<body>
+
+  <input type="checkbox" id="menu">
+  <div class="nav-bar">
+    <div class="nav-logo"><img src="logo.png"></div>
+    <label for="menu" class="menu-icon"></label>
+  </div>
+
+  <div class="slider">
+    <ul>
+      <li><a href="app.html"><img src="home.png" height="25px" style="margin-right:8px; padding-bottom:3px;">HOME</a></li>
+      <li><a href="about.html"><img src="about.png" height="25px" style="margin-right:8px; padding-bottom:3px;">ABOUT</a></li>
+      <li><a href="wbp-syllabus.html"><img src="syllabus.png" height="25px" style="margin-right:8px; padding-bottom:3px;">SYLLABUS</a></li>
+      <li><a href="wbp-notice.html"><img src="notice.png" height="25px" style="margin-right:8px; padding-bottom:3px;">NOTICE</a></li>
+      <li><a href="mock-test.html"><img src="mock-test.png" height="25px" style="margin-right:8px; padding-bottom:3px;">MOCK-TEST</a></li>
+    </ul>
+  </div>
+
+  <label for="menu" class="big-checkbox"></label>
+
+  <br>
+  <h2><font color="orange">T</font><font color="teal">W</font><font color="orange">S</font></h2>
+  <p class="styling">The Way Of Solution</p>
+
+  <h1 style="color:red;text-align:center;font-size:14px;margin-top:5px;letter-spacing:2px;">&#10083 ALL TOPICS &#10083</h1>
+  <h1 style="text-align:center;">Welcome to TWS 2.0</h1>
+  <br>
+  <p style="font-size:20px;margin-bottom:20px;font-weight:bold;text-align:center;">The Way of Solution 2.0 – 
+    <span style="color: cyan;"><i>Learn Everything in Bengali</i></span>
+  </p>
+
+  <center><h3 style="font-size:20px; color:lightgreen; text-decoration: dotted underline;" >CLASSES</h3></center>
+
+  <div class="subject-section">
+    <a href="math.html" class="subject-box math">MATH</a>
+    <a href="reasoning.html" class="subject-box reasoning">REASONING</a>
+    <a href="polity.html" class="subject-box polity">POLITY</a>
+    <a href="history.html" class="subject-box history">HISTORY</a>
+    <a href="geography.html" class="subject-box geography">GEOGRAPHY</a>
+    <a href="staticgk.html" class="subject-box gk">STATIC GK</a>
+    <a href="english.html" class="subject-box math">ENGLISH</a>
+    <a href="current-affairs.html" class="subject-box reasoning">CURRENT AFFAIRS</a>
+    <a href="physics.html" class="subject-box polity">PHYSICS</a>
+    <a href="chemistry.html" class="subject-box history">CHEMISTRY</a>
+    <a href="economy.html" class="subject-box geography">ECONOMY</a>
+    <a href="computer.html" class="subject-box gk">COMPUTER</a>
+  </div>
+
+  <div class="features"> 
+    <div class="details">
+      <div style="font-size:30px;display:flex;justify-content:center;align-items:center;">🔰</div>
+      <div style="font-size:18px;font-family:সাবির ২ UNICODE;color:yellow;">এখানে বিভিন্ন ধরনের অংক সহজ ও সরল উপায়ে করানো হয়েছে SHORT TRICK এর মাধ্যমে !</div>
+    </div>
+ 
+    <div class="details" style="border:1.6px solid red;">
+      <div style="font-size:30px;display:flex;justify-content:center;align-items:center;">🔰</div>
+      <div style="font-size:18px;font-family:সাবির ২ UNICODE;">এখানে  বিভিন্ন ধরনের PAID COURSE এর ক্লাসগুলির PDF সম্পূর্ণ FREE তে পাবে !</div>
+    </div>
+    
+    <div class="details" style="border:1.6px solid lightgreen;">
+      <div style="font-size:30px;display:flex;justify-content:center;align-items:center;">🔰</div>
+      <div style="font-size:18px;font-family:সাবির ২ UNICODE;color:lightblue;">এর পাশাপাশি রয়েছে FREE MOCK TEST যেটি তোমার PRACTICE এ অত্যন্ত সাহায্য করবে !</div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="row">
+      <div class="col">
+        <img src="logo.png" class="logo">
+        <p>Improve your Skills and</p>
+        <p><font color="yellow">Learn something new</font></p>
+      </div>
+
+      <div class="col">
+        <h3>OFFICE<div class="underline"><span></span></div></h3>
+        <p><img src="location.png" class="location"> Siliguri More</p>
+        <p>Raiganj, Near Bank of Baroda</p>
+        <p>Uttar Dinajpur, West Bengal,</p>
+        <p>Pin-733134, India</p>       
+      </div>
+
+      <div class="col">
+        <h3>CONTACT<div class="underline"><span></span></div></h3>
+        <p>Name- Sujit Barman</p>
+        <p><img src="phone.png" class="mobile"> +91 5234595250</p>
+        <p>Helpline No. - 188079326131</p>
+        <p><img src="message.png" class="email"> sujitbar44@gmail.com</p> 
+      </div>
+
+      <div class="col"> 
+        <h3>FOLLOW<div class="underline"><span></span></div></h3>
+        <a href="https://youtube.com/@bhujpurisdon?si=FPFCghUTy-Lmceax"><img class="youtube" src="youtube.png"></a>
+        <a href="https://www.facebook.com/share/1YBSWHHgi2/"><img class="youtube" src="facebook.png"></a>
+        <a href="#"><img class="youtube" src="Instagram.png"></a>
+        <a href="https://whatsapp.com/channel/0029VbAMiLS4SpkAcNz3He3E"><img class="youtube" src="whatsapp.png"></a>
+        <a href="#"><img class="youtube" src="email.png"></a>
+      </div>
+    </div>
+    <br>
+    <center>
+      <hr style="border:1px dotted yellow;margin-top:-10px;width:83%;">
+      <p class="copyright">&#169 Copyright @2025 All Right Reserve West Bengal, India</p>
+    </center>
+    <br>
+    <center>
+      D<sub>e</sub> V<sup>e</sup> <mark>L<sub>o</sub> V<sup>e</sup></mark>
+      <br>by &#11015;<br><br>
+      <font size="5" color="red">&#10083;</font> &#160 
+      <font face="sans-serif" size="7" color="orange">S</font>ujit &#160 &#10133;
+      <font face="sans-serif" size="6" color="red">B</font>arman  
+      &#160 <font size="5" color="red">&#10083;</font>
+    </center>
+  </footer>
+
+</body>
+</html>
