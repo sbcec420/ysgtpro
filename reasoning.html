@@ -593,9 +593,22 @@
     <center><hr style=" width:90%;" ></center>
     
     <p class="copyright">&#169 Copyright  @2025  All Right Reserve West Bengal, India</p>
+    <div id="preloader">
+    <div class="loader-circle"></div>
+    <p>Please wait...</p>
+    </div>
+    
     
     
     </body>
+    
+    <script>
+    window.onload = function() {
+    // পেজ পুরোপুরি লোড হওয়ার পর এই ফাংশনটি চলবে
+    document.getElementById("preloader").style.display = "none";
+    document.getElementById("main-content").style.display = "block";
+    };
+    </script>
     </html>
     
     <style>
@@ -840,4 +853,54 @@
     margin-top:0px;
     text-align:center;
     }
+    
+    /* লোডিং এনিমেশনের জন্য নতুন স্টাইল */
+    #preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1e1e1e; /* পেজের ব্যাকগ্রাউন্ডের সাথে মিল রেখে */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* যেন এটি সবার উপরে থাকে */
+    }
+    
+    .loader-circle {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #333;
+    border-top: 5px solid orange; /* আপনার লোগোর কালারের সাথে মিল রেখে */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    }
+    
+    #preloader p {
+    color: white;
+    margin-top: 15px;
+    font-family: sans-serif;
+    letter-spacing: 2px;
+    font-size: 18px;
+    }
+    
+    @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    }
+    
+    /* লোড হওয়ার পর কন্টেন্ট দেখানোর জন্য */
+    .loaded-content {
+    display: none;
+    }
+    
+    /* আপনার দেওয়া অরিজিনাল স্টাইল শুরু */
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    }
+    
     </style>
