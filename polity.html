@@ -214,10 +214,47 @@
 		<div ><a class="b" href="#"  >TEST</a></div>
 		</div>
 	</div>
+	
+	
+	<div class="video">
+	<div class="img">P-11</div>
+	<div class="information">
+	<p style="font-size:22.3px; line-height:23px; margin-left:-13px;" >সুপ্রিমকোর্ট, হাইকোর্ট ও পঞ্চায়েতী রাজ </p>
+	<br>	
+	<div ><a class="b" href="P11.html"  >PDF </a></div>
+	<p><font style="font-size:26px; 
+	margin-left:0px;
+	float:left;" >👈🏼</font></p>
+	<p><font style="font-size:26px;
+	margin-left:4px;
+	margin-right:10px;
+	float:left;" >👉🏼</font></p>
+	<div ><a class="b" href="#"  >TEST</a></div>
+	</div>
+	</div>
+	
+	
+	
+	<div class="video">
+	<div class="img">P-12</div>
+	<div class="information">
+	<p style="font-size:22.3px; line-height:23px; margin-left:-13px;" >পলিটি মক টেস্ট </p>
+	<br>	
+	<div ><a class="b" href="P12.html"  >PDF </a></div>
+	<p><font style="font-size:26px; 
+	margin-left:0px;
+	float:left;" >👈🏼</font></p>
+	<p><font style="font-size:26px;
+	margin-left:4px;
+	margin-right:10px;
+	float:left;" >👉🏼</font></p>
+	<div ><a class="b" href="#"  >TEST</a></div>
+	</div>
+	</div>
 			
  </div>
       
-      <p style="text-align:center;" >Update Soon....</p> 
+      
       <br><br>
        
   </div>  <br>
@@ -239,9 +276,20 @@
     
     <p class="copyright">&#169 Copyright  @2025  All Right Reserve West Bengal, India</p>
     
+    <div id="preloader">
+    <div class="loader-circle"></div>
+    <p>Please wait...</p>
+    </div>
+    
     
     </body>
     </html>
+    <script>
+    window.onload = function() {
+    document.getElementById("preloader").style.display = "none";
+    };
+    </script>
+    
     
     <style>
   *{
@@ -484,5 +532,48 @@
     word-spacing:3px;
     margin-top:0px;
     text-align:center;
+    }
+    
+    
+    /* Loading Animation */
+    #preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    }
+    
+    .loader-circle {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #333;
+    border-top: 5px solid orange;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    }
+    
+    #preloader p {
+    color: white;
+    margin-top: 15px;
+    font-family: sans-serif;
+    letter-spacing: 2px;
+    font-size: 18px;
+    }
+    
+    @keyframes spin {
+    0% {
+    transform: rotate(0deg);
+    }
+    
+    100% {
+    transform: rotate(360deg);
+    }
     }
     </style>
