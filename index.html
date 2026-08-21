@@ -1,1451 +1,465 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TWS 2.0 - The Way of Solution</title>
-  
-  <!-- Firebase SDK (প্রয়োজনীয়) -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-  <!-- Razorpay SDK -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-  <style>
-  *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: সাবির ২ UNICODE;
-    user-select: none;
-  }
-  
-  @font-face {
-    font-family: রাজন শৈলী UNICODE;
-    src: url('রাজন শৈলী UNICODE.ttf');
-  }
-  
-  @font-face {
-    font-family: সাবির ২ UNICODE;
-    src:url("সাবির ২ UNICODE.ttf");
-  }
-  
-  
-  body {
-    font-family:Arial,sans-serif;
-    background:#1e1e1e;
-    color:#fff;
-    -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  }
-  
-  .nav-bar {
-    width:100%;
-    height:60px;
-    border:1px solid red;
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-    background:linear-gradient(to right,orange,white,green);
-    position:sticky;
-    top:0;
-    z-index:2;
-  }
-  
-  #menu { display:none; }
-  
-  .nav-logo {
-    height:58px;
-    width:58px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border-radius:50%;
-    position:absolute;
-    right:50%;
-    transform:translateX(50%);
-  }
-  
-  .nav-logo img{
-    height:54px;
-    width:54px;
-    border-radius:50%;
-  }
-  
-  .menu-icon {
-    font-size:50px;
-    transition:0.3s;
-    margin-right:15px;
-  }
- 
-  .menu-icon::before{ content:"≡"; }
- 
-  #menu:checked + .nav-bar .menu-icon::before{
-    content:"×";
-  }
- 
-  .slider {
-    height:100%;
-    width:180px;
-    background-color:white;
-    position:fixed;
-    right:-310px;
-    z-index:2;
-    transition:0.4s ease;
-  }
- 
-  .slider ul { list-style:none; }
- 
-  .slider ul li{
-    height:44px;
-    width:100%;
-    display:flex;
-    align-items:center;
-    border-bottom:1px solid green;
-  }
-  .slider ul li:hover {
-    background-color:fuchsia;
-    color:orange;
-  }
- 
-  .slider ul li a{
-    width:100%;
-    height:100%;
-    color:purple;
-    text-decoration:none;
-    font-weight:bolder;
-    display:flex;
-    justify-content:flex-start;
-    align-items:center;
-    margin-left:18px;
-  }
- 
-  #menu:checked ~ .slider { right:0; }
- 
-  .big-checkbox{
-    height:100%;
-    width:100%;
-    background:rgba(0,0,0,0.6);
-    position:fixed;
-    top:0;
-    left:0;
-    visibility:hidden;
-    z-index:1;
-  }
- 
-  #menu:checked ~ .big-checkbox { visibility:visible; }
- 
-  h2{
-    margin:0;
-    padding:0;
-    text-align:center;
-    letter-spacing:45px;
-    padding-left:50px;
-  }
- 
-  .styling {
-    text-align:center;
-    margin:0;
-    padding:0;
-    font-size:12px;
-    font-family:cursive;
-    word-spacing:33px;
-    margin-top:-8px;
-  }
- 
-  .details {
-    border:1.6px solid orange;
-    border-bottom-left-radius:37px;
-    border-top-right-radius:37px;
-    display:flex;
-    justify-content:flex-start;
-    padding:8px;
-    gap:6px;
-    margin-bottom:8px;
-  }
- 
-  .features { margin:15px; }
-
-  .subject-section {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    padding: 15px;
-    justify-items: center;
-    text-align: center;
-  }
-
-  .subject-box {
-    width: 150px;
-    height: 65px;
-    background: linear-gradient(to right, #ff8c00, #ff4500);
-    color: white;
-    font-weight: bold;
-    border-radius: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    font-size: 14px;
-    box-shadow: 2px 3px 15px #ff7f50;
-    transition: 0.3s ease;
-    border: 1.5px solid white;
-  }
-
-  .subject-box:hover {
-    transform: scale(1.08);
-    box-shadow: 2px 3px 25px yellow;
-  }
-
-  .math { background: linear-gradient(45deg, #ff0000, #ff6600); }
-  .reasoning { background: linear-gradient(45deg, #008080, #00ced1); }
-  .polity { background: linear-gradient(45deg, #4b0082, #8a2be2); }
-  .history { background: linear-gradient(45deg, #993300, #ff6600); }
-  .geography { background: linear-gradient(45deg, #228b22, #32cd32); }
-  .gk { background: linear-gradient(45deg, #0066cc, #00bfff); }
-
-  footer {
-    width: 100%;
-    height: auto;
-    position: static;
-    background: linear-gradient(to right, #00093c, #2d0b00);
-    color: #fff;
-    border-top-left-radius: 70px;
-    font-size: 13px;
-    line-height: 15px;
-  }
- 
-  .row {
-    width: 93%;
-    margin:auto;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    align-items:center;
-    gap:13px;
-    padding:10px;
-  }
- 
-  .col { padding-left:9px; height:120px; width:150px; }
- 
-  .col h3 {
-    color: orange;
-    width: fit-content;
-    margin-bottom: 20px;
-    margin-top:5px;
-    position: relative;
-    font-size: 17px;
-    font-weight: bolder;
-  }
-
-  .col p{ font-size:11px; line-height:13px; margin-bottom:1px; }
- 
-  .logo {
-    height: 73px;
-    width: 118px;
-    border-radius:5px;
-    margin-top: 10px;
-    margin-left:3px;
-  }
- 
-  .underline {
-    width: 100%;
-    height: 5px;
-    background: olive;
-    border-radius: 3px;
-    position: absolute;
-    overflow: hidden;
-    margin-top:6px;
-  }
- 
-  .underline span {
-    width: 15px;
-    height: 100%;
-    background: linear-gradient(to right, orange, white,green );
-    border-radius: 3px;
-    position: absolute;
-    animation: moving 1.87s linear infinite alternate;
-  }
- 
-  @keyframes moving {
-    0% {left: -40%;}
-    100% {left: 120%;}
-  }
- 
-  .location { height: 11.5px; }
-  .mobile { height: 11px; }
-  .youtube {
-    height: 27px;
-    width:27px;
-    font-size:30px;
-    margin-top: 10px;
-    margin-right: 12px;
-    box-shadow: 3px 5px 10px white;
-    border-radius: 50%;
-  }
-  .email { height: 9.3px; padding-top:2px; }
-  .copyright{ font-size:11px; word-spacing:3px; margin-top:-15px; }
-
-  /* ===== লগইন/রেজিস্ট্রেশন মোডাল স্টাইল ===== */
-  .auth-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-  }
-
-  .auth-overlay.active {
-    display: flex;
-  }
-
-  .auth-modal {
-    background: white;
-    width: 90%;
-    max-width: 380px;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    animation: slideUp 0.3s ease;
-  }
-
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .auth-header {
-    background: linear-gradient(135deg, #4361ee, #3a0ca3);
-    color: white;
-    padding: 25px 20px;
-    text-align: center;
-  }
-
-  .auth-header h2 {
-    font-size: 24px;
-    margin-bottom: 5px;
-    letter-spacing: normal;
-    padding: 0;
-  }
-
-  .auth-header p {
-    font-size: 14px;
-    opacity: 0.9;
-  }
-
-  .auth-body {
-    padding: 25px 20px;
-  }
-
-  .auth-input-group {
-    margin-bottom: 18px;
-  }
-
-  .auth-input-group label {
-    display: block;
-    color: #333;
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 6px;
-  }
-
-  .auth-input-group input {
-    width: 100%;
-    padding: 14px 16px;
-    border: 2px solid #e0e0e0;
-    border-radius: 12px;
-    font-size: 15px;
-    transition: all 0.3s;
-    font-family: Arial, sans-serif;
-  }
-
-  .auth-input-group input:focus {
-    outline: none;
-    border-color: #4361ee;
-  }
-
-  .auth-btn {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, #4361ee, #3a0ca3);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-top: 10px;
-  }
-
-  .auth-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
-  }
-
-  .auth-switch {
-    text-align: center;
-    margin-top: 20px;
-  }
-
-  .auth-switch a {
-    color: #4361ee;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-  }
-
-  .auth-close {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    color: white;
-    font-size: 35px;
-    cursor: pointer;
-    z-index: 10000;
-  }
-
-  /* ===== পেমেন্ট মোডাল - আপডেটেড কালার ===== */
-  .payment-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-  }
-
-  .payment-overlay.active {
-    display: flex;
-  }
-
-  .payment-modal {
-    background: white;
-    width: 90%;
-    max-width: 400px;
-    border-radius: 24px;
-    overflow: hidden;
-    max-height: 80vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .payment-header {
-    background: linear-gradient(135deg, #2d9cdb, #2d7adb);
-    color: white;
-    padding: 20px;
-    text-align: center;
-  }
-
-  .payment-header h3 {
-    font-size: 20px;
-    margin-bottom: 5px;
-  }
-
-  .payment-body {
-    padding: 20px;
-    overflow-y: auto;
-  }
-
-  .user-info {
-    background: #f8f9fa;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 20px;
-  }
-
-  .user-info p {
-    color: #333;
-    margin: 5px 0;
-    font-size: 14px;
-  }
-
-  .packages-scroll {
-    display: flex;
-    overflow-x: auto;
-    gap: 10px;
-    padding: 5px 0 15px;
-  }
-
-  .packages-scroll::-webkit-scrollbar {
-    height: 3px;
-  }
-
-  .packages-scroll::-webkit-scrollbar-thumb {
-    background: #2d9cdb;
-    border-radius: 3px;
-  }
-
-  /* আপডেটেড প্যাকেজ কার্ড কালার */
-  .package-card {
-    min-width: 110px;
-    background: white;
-    border: 2px solid #e0e0e0;
-    border-radius: 16px;
-    padding: 12px 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .package-card.selected {
-    border-color: #2d9cdb;
-    background: #e3f2fd;
-  }
-
-  .package-card.popular {
-    border-color: #ff6b6b;
-    position: relative;
-    background: linear-gradient(145deg, #fff5f5, #ffffff);
-  }
-
-  .popular-badge {
-    position: absolute;
-    top: -8px;
-    right: 8px;
-    background: #ff6b6b;
-    color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 9px;
-    font-weight: bold;
-    box-shadow: 0 2px 8px rgba(255,107,107,0.3);
-  }
-
-  .package-icon {
-    font-size: 24px;
-    margin-bottom: 5px;
-  }
-
-  .package-name {
-    font-size: 13px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 5px;
-  }
-
-  .package-price {
-    font-size: 22px;
-    font-weight: bold;
-    color: #2d9cdb;
-  }
-
-  .package-price::before {
-    content: '₹';
-    font-size: 14px;
-  }
-
-  .package-duration {
-    font-size: 10px;
-    color: #666;
-    margin-top: 5px;
-  }
-
-  /* স্পেশাল স্টাইল ফর ৩ ডেস কার্ড */
-  .package-card.popular .package-name {
-    color: #d63031;
-  }
-
-  .package-card.popular .package-price {
-    color: #e17055;
-  }
-
-  .selected-plan {
-    background: #e8f5e9;
-    border-radius: 16px;
-    padding: 15px;
-    margin: 15px 0;
-    border: 2px solid #4cc9f0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .selected-plan h4 {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 3px;
-  }
-
-  .selected-plan p {
-    font-size: 12px;
-    color: #666;
-  }
-
-  .payment-btn {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, #2d9cdb, #2d7adb);
-    color: white;
-    border: none;
-    border-radius: 16px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-top: 10px;
-  }
-
-  .payment-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(45,156,219,0.3);
-  }
-
-  .payment-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  /* ===== প্রোফাইল পপ-আপ ===== */
-  .profile-popup {
-    position: fixed;
-    top: 70px;
-    left: 10px;
-    width: 280px;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    z-index: 1000;
-    display: none;
-  }
-
-  .profile-popup.active {
-    display: block;
-  }
-
-  .profile-header {
-    background: linear-gradient(135deg, #4361ee, #3a0ca3);
-    color: white;
-    padding: 20px;
-    text-align: center;
-  }
-
-  .profile-avatar {
-    width: 60px;
-    height: 60px;
-    background: white;
-    border-radius: 50%;
-    margin: 0 auto 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    color: #4361ee;
-    font-weight: bold;
-  }
-
-  .profile-body {
-    padding: 20px;
-  }
-
-  .profile-info {
-    margin-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-  }
-
-  .profile-info label {
-    color: #666;
-    font-size: 11px;
-    display: block;
-  }
-
-  .profile-info p {
-    color: #333;
-    font-weight: 600;
-    font-size: 14px;
-    margin-top: 3px;
-  }
-
-  .profile-expiry {
-    background: #fff3cd;
-    border-radius: 8px;
-    padding: 10px;
-    margin: 15px 0;
-    text-align: center;
-  }
-
-  .profile-logout {
-    width: 100%;
-    padding: 12px;
-    background: #f72585;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  /* ===== নোটিফিকেশন ===== */
-  .notification {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 15px 25px;
-    background: #4cc9f0;
-    color: white;
-    border-radius: 30px;
-    z-index: 10000;
-    display: none;
-    animation: slideIn 0.3s ease;
-  }
-
-  .notification.show { display: block; }
-  .notification.error { background: #f72585; }
-
-  @keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0%); opacity: 1; }
-  }
-
-  .hidden { display: none !important; }
-/*  
-  
-  #preloader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #1e1e1e; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999; 
-  }
-  
-  .loader-circle {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #333;
-  border-top: 5px solid orange; 
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  }
-  
-  #preloader p {
-  color: white;
-  margin-top: 15px;
-  font-family: sans-serif;
-  letter-spacing: 2px;
-  font-size: 18px;
-  }
-  
-  @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-  }
-  
-  
-  .loaded-content {
-  display: none;
-  }
-  */
-  
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TWS 2.0 - The Way of Solution</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:সাবির ২ UNICODE;
+  user-select:none;
+}
+
+@font-face{
+  font-family:রাজন শৈলী UNICODE;
+  src:url('রাজন শৈলী UNICODE.ttf');
+}
+
+@font-face{
+  font-family:সাবির ২ UNICODE;
+  src:url("সাবির ২ UNICODE.ttf");
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#1e1e1e;
+  color:#fff;
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+}
+
+/* ===== NAVBAR ===== */
+
+.nav-bar{
+  width:100%;
+  height:60px;
+  border:1px solid red;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  background:linear-gradient(to right,orange,white,green);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+#menu{display:none;}
+
+.nav-logo{
+  height:58px;
+  width:58px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:50%;
+  position:absolute;
+  right:50%;
+  transform:translateX(50%);
+}
+
+.nav-logo img{
+  height:54px;
+  width:54px;
+  border-radius:50%;
+}
+
+.menu-icon{
+  font-size:50px;
+  transition:.3s;
+  margin-right:15px;
+}
+
+.menu-icon::before{content:"≡";}
+
+#menu:checked+.nav-bar .menu-icon::before{content:"×";}
+
+/* ===== SIDE MENU ===== */
+
+.slider{
+  height:100%;
+  width:180px;
+  background:#fff;
+  position:fixed;
+  top:60px;
+  right:-310px;
+  z-index:20;
+  transition:.4s ease;
+}
+
+.slider ul{list-style:none;}
+
+.slider ul li{
+  height:44px;
+  width:100%;
+  display:flex;
+  align-items:center;
+  border-bottom:1px solid green;
+}
+
+.slider ul li:hover{
+  background-color:fuchsia;
+  color:orange;
+}
+
+.slider ul li a{
+  width:100%;
+  height:100%;
+  color:purple;
+  text-decoration:none;
+  font-weight:bolder;
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+  margin-left:18px;
+}
+
+#menu:checked~.slider{right:0;}
+
+.big-checkbox{
+  height:100%;
+  width:100%;
+  background:rgba(0,0,0,.6);
+  position:fixed;
+  top:0;
+  left:0;
+  visibility:hidden;
+  z-index:15;
+}
+
+#menu:checked~.big-checkbox{visibility:visible;}
+
+/* ===== HEADER ===== */
+
+h2{
+  margin:0;
+  padding:0 0 0 50px;
+  text-align:center;
+  letter-spacing:45px;
+}
+
+.styling{
+  text-align:center;
+  margin:-8px 0 0;
+  padding:0;
+  font-size:12px;
+  font-family:cursive;
+  word-spacing:33px;
+}
+
+/* ===== FEATURES ===== */
+
+.details{
+  border:1.6px solid orange;
+  border-bottom-left-radius:37px;
+  border-top-right-radius:37px;
+  display:flex;
+  justify-content:flex-start;
+  padding:8px;
+  gap:6px;
+  margin-bottom:8px;
+}
+
+.features{margin:15px;}
+
+/* ===== SUBJECTS ===== */
+
+.subject-section{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  padding:15px;
+  justify-items:center;
+  text-align:center;
+}
+
+.subject-box{
+  width:150px;
+  height:65px;
+  background:linear-gradient(to right,#ff8c00,#ff4500);
+  color:#fff;
+  font-weight:bold;
+  border-radius:18px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-decoration:none;
+  font-size:14px;
+  box-shadow:2px 3px 15px #ff7f50;
+  transition:.3s ease;
+  border:1.5px solid #fff;
+}
+
+.subject-box:hover{
+  transform:scale(1.08);
+  box-shadow:2px 3px 25px yellow;
+}
+
+.math{background:linear-gradient(45deg,#ff0000,#ff6600);}
+.reasoning{background:linear-gradient(45deg,#008080,#00ced1);}
+.polity{background:linear-gradient(45deg,#4b0082,#8a2be2);}
+.history{background:linear-gradient(45deg,#993300,#ff6600);}
+.geography{background:linear-gradient(45deg,#228b22,#32cd32);}
+.gk{background:linear-gradient(45deg,#0066cc,#00bfff);}
+
+/* ===== FOOTER ===== */
+
+footer{
+  width:100%;
+  background:linear-gradient(to right,#00093c,#2d0b00);
+  color:#fff;
+  border-top-left-radius:70px;
+  font-size:13px;
+  line-height:15px;
+}
+
+.row{
+  width:93%;
+  margin:auto;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:13px;
+  padding:10px;
+}
+
+.col{
+  padding-left:9px;
+  height:120px;
+  width:150px;
+}
+
+.col h3{
+  color:orange;
+  width:fit-content;
+  margin:5px 0 20px;
+  position:relative;
+  font-size:17px;
+  font-weight:bolder;
+}
+
+.col p{
+  font-size:11px;
+  line-height:13px;
+  margin-bottom:1px;
+}
+
+.logo{
+  height:73px;
+  width:118px;
+  border-radius:5px;
+  margin:10px 0 0 3px;
+}
+
+.underline{
+  width:100%;
+  height:5px;
+  background:olive;
+  border-radius:3px;
+  position:absolute;
+  overflow:hidden;
+  margin-top:6px;
+}
+
+.underline span{
+  width:15px;
+  height:100%;
+  background:linear-gradient(to right,orange,white,green);
+  border-radius:3px;
+  position:absolute;
+  animation:moving 1.87s linear infinite alternate;
+}
+
+@keyframes moving{
+  0%{left:-40%;}
+  100%{left:120%;}
+}
+
+.location{height:11.5px;}
+.mobile{height:11px;}
+
+.youtube{
+  height:27px;
+  width:27px;
+  font-size:30px;
+  margin-top:10px;
+  margin-right:12px;
+  box-shadow:3px 5px 10px white;
+  border-radius:50%;
+}
+
+.email{
+  height:9.3px;
+  padding-top:2px;
+}
+
+.copyright{
+  font-size:11px;
+  word-spacing:3px;
+  margin-top:-15px;
+}
+</style>
 </head>
 
 <body>
-  <!-- ===== নোটিফিকেশন ===== -->
-  <div id="notification" class="notification"></div>
 
-  <!-- ===== লগইন মোডাল ===== -->
-  <div id="loginOverlay" class="auth-overlay">
-    <div class="auth-close" onclick="closeLoginModal()">×</div>
-    <div class="auth-modal">
-      <div class="auth-header">
-        <h2>🔐 Login to TWS 2.0</h2>
-        <p>Access premium content</p>
-      </div>
-      <div class="auth-body">
-        <div class="auth-input-group">
-          <label>Email</label>
-          <input type="email" id="loginEmail" placeholder="Enter your email">
-        </div>
-        <div class="auth-input-group">
-          <label>Password</label>
-          <input type="password" id="loginPassword" placeholder="Enter password">
-        </div>
-       <<button class="auth-btn" onclick="handleLogin()">Login</button> 
-        <div class="auth-switch">
-          <a onclick="showRegisterModal()">Don't have an account? Register</a>
-        </div>
-      </div>
+<!-- ===== MAIN CONTENT ===== -->
+
+<div id="mainContent">
+
+<input type="checkbox" id="menu">
+
+<div class="nav-bar">
+  <div class="nav-logo"><img src="logo.png"></div>
+  <label for="menu" class="menu-icon"></label>
+</div>
+
+<div class="slider">
+  <ul>
+    <li><a href="app.html"><img src="home.png" height="25px" style="margin-right:8px;padding-bottom:3px;">HOME</a></li>
+    <li><a href="about.html"><img src="about.png" height="25px" style="margin-right:8px;padding-bottom:3px;">ABOUT</a></li>
+    <li><a href="wbp-syllabus.html"><img src="syllabus.png" height="25px" style="margin-right:8px;padding-bottom:3px;">SYLLABUS</a></li>
+    <li><a href="wbp-notice.html"><img src="notice.png" height="25px" style="margin-right:8px;padding-bottom:3px;">NOTICE</a></li>
+    <li><a href="mock-test.html"><img src="mock-test.png" height="25px" style="margin-right:8px;padding-bottom:3px;">MOCK-TEST</a></li>
+  </ul>
+</div>
+
+<label for="menu" class="big-checkbox"></label>
+
+<br>
+
+<h2><font color="orange">T</font><font color="teal">W</font><font color="orange">S</font></h2>
+<p class="styling">The Way Of Solution</p>
+
+<h1 style="color:red;text-align:center;font-size:14px;margin-top:5px;letter-spacing:2px;">&#10083 ALL TOPICS &#10083</h1>
+
+<h1 style="text-align:center;">Welcome to TWS 2.0</h1>
+
+<br>
+
+<p style="font-size:20px;margin-bottom:20px;font-weight:bold;text-align:center;">
+  The Way of Solution 2.0 –
+  <span style="color:cyan;"><i>Learn Everything in Bengali</i></span>
+</p>
+
+<center>
+  <h3 style="font-size:20px;color:lightgreen;text-decoration:dotted underline;">CLASSES</h3>
+</center>
+
+<div class="subject-section">
+  <a href="math.html" class="subject-box math">MATH</a>
+  <a href="reasoning.html" class="subject-box reasoning">REASONING</a>
+  <a href="polity.html" class="subject-box polity">POLITY</a>
+  <a href="history.html" class="subject-box history">HISTORY</a>
+  <a href="geography.html" class="subject-box geography">GEOGRAPHY</a>
+  <a href="staticgk.html" class="subject-box gk">STATIC GK</a>
+  <a href="english.html" class="subject-box math">ENGLISH</a>
+  <a href="current-affairs.html" class="subject-box reasoning">CURRENT AFFAIRS</a>
+  <a href="physics.html" class="subject-box polity">PHYSICS</a>
+  <a href="chemistry.html" class="subject-box history">CHEMISTRY</a>
+  <a href="economy.html" class="subject-box geography">ECONOMY</a>
+  <a href="computer.html" class="subject-box gk">COMPUTER</a>
+</div>
+
+<div class="features">
+
+  <div class="details">
+    <div style="font-size:30px;display:flex;justify-content:center;align-items:center;">🔰</div>
+    <div style="font-size:18px;font-family:সাবির ২ UNICODE;color:yellow;">
+      এখানে বিভিন্ন ধরনের অংক সহজ ও সরল উপায়ে করানো হয়েছে SHORT TRICK এর মাধ্যমে !
     </div>
   </div>
 
-  <!-- ===== রেজিস্ট্রেশন মোডাল ===== -->
-  <div id="registerOverlay" class="auth-overlay">
-    <div class="auth-close" onclick="closeRegisterModal()">×</div>
-    <div class="auth-modal">
-      <div class="auth-header">
-        <h2>📝 Create Account</h2>
-        <p>Join TWS 2.0 family</p>
-      </div>
-      <div class="auth-body">
-        <div class="auth-input-group">
-          <label>Full Name</label>
-          <input type="text" id="regName" placeholder="Enter your name">
-        </div>
-        <div class="auth-input-group">
-          <label>Email</label>
-          <input type="email" id="regEmail" placeholder="Enter your email">
-        </div>
-        <div class="auth-input-group">
-          <label>Phone</label>
-          <input type="tel" id="regPhone" placeholder="Enter phone number">
-        </div>
-        <div class="auth-input-group">
-          <label>Password</label>
-          <input type="password" id="regPassword" placeholder="Create password">
-        </div>
-        <div class="auth-input-group">
-          <label>Confirm Password</label>
-          <input type="password" id="regConfirm" placeholder="Confirm password">
-        </div>
-        <button class="auth-btn" onclick="handleRegister()">Register</button>
-        <div class="auth-switch">
-          <a onclick="showLoginModal()">Already have an account? Login</a>
-        </div>
-      </div>
+  <div class="details" style="border:1.6px solid red;">
+    <div style="font-size:30px;display:flex;justify-content:center;align-items:center;">🔰</div>
+    <div style="font-size:18px;font-family:সাবির ২ UNICODE;">
+      এখানে বিভিন্ন ধরনের PAID COURSE এর ক্লাসগুলির PDF সম্পূর্ণ FREE তে পাবে !
     </div>
   </div>
 
-  <!-- ===== পেমেন্ট মোডাল ===== -->
-  <div id="paymentOverlay" class="payment-overlay">
-    <div class="auth-close" onclick="closePaymentModal()">×</div>
-    <div class="payment-modal">
-      <div class="payment-header">
-        <h3>💎 Choose Your Plan</h3>
-        <p>Select a package to continue</p>
-      </div>
-      <div class="payment-body">
-        <div id="paymentUserInfo" class="user-info"></div>
-
-        <div class="packages-scroll" id="packagesContainer"></div>
-
-        <div id="selectedPlan" class="selected-plan hidden">
-          <div>
-            <h4 id="selectedName">Plan</h4>
-            <p id="selectedDuration">Duration</p>
-          </div>
-          <span class="package-price" id="selectedPrice">0</span>
-        </div>
-
-        <button class="payment-btn" id="payNowBtn" onclick="processPayment()" disabled>Select a plan</button>
-      </div>
+  <div class="details" style="border:1.6px solid lightgreen;">
+    <div style="font-size:30px;display:flex;justify-content:center;align-items:center;">🔰</div>
+    <div style="font-size:18px;font-family:সাবির ২ UNICODE;color:lightblue;">
+      এর পাশাপাশি রয়েছে FREE MOCK TEST যেটি তোমার PRACTICE এ অত্যন্ত সাহায্য করবে !
     </div>
   </div>
 
-  <!-- ===== প্রোফাইল পপ-আপ ===== -->
-  <div id="profilePopup" class="profile-popup">
-    <div class="profile-header">
-      <div class="profile-avatar" id="popupAvatar">👤</div>
-      <h3 id="popupName">User Name</h3>
-    </div>
-    <div class="profile-body">
-      <div class="profile-info">
-        <label>Email</label>
-        <p id="popupEmail">user@email.com</p>
-      </div>
-      <div class="profile-info">
-        <label>Phone</label>
-        <p id="popupPhone">+91 9876543210</p>
-      </div>
-      <div class="profile-info">
-        <label>Member Since</label>
-        <p id="popupJoined">Jan 2026</p>
-      </div>
-      <div class="profile-expiry" id="expiryBox">
-        <label>⏰ Plan Expiry</label>
-        <p id="popupExpiry">No active plan</p>
-      </div>
-      <button class="profile-logout" onclick="handleLogout()">Logout</button>
-    </div>
+</div>
+
+<footer>
+
+<div class="row">
+
+  <div class="col">
+    <img src="logo.png" class="logo">
+    <p>Improve your Skills and</p>
+    <p><font color="yellow">Learn something new</font></p>
   </div>
 
-  <!-- ===== আপনার মূল কন্টেন্ট (সম্পূর্ণ অপরিবর্তিত) ===== -->
-  <div id="mainContent">
-    <input type="checkbox" id="menu">
-    <div class="nav-bar">
-      <!-- প্রোফাইল সেকশন (আপনার nav-bar এর বাম পাশে) -->
-      <div style="display:flex; align-items:center; gap:8px; position:absolute; left:10px; cursor:pointer;" onclick="toggleProfilePopup()">
-        <div style="width:40px; height:40px; background:linear-gradient(135deg,#4361ee,#f72585); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; border:2px solid white;" id="profileAvatar">👤</div>
-        <div style="color:#333; font-weight:bold; max-width:80px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" id="profileName"><!-- Login --></div>
-      </div>
-
-      <div class="nav-logo"><img src="logo.png"></div>
-      <label for="menu" class="menu-icon"></label>
-    </div>
-
-    <div class="slider">
-      <ul>
-        <li><a href="app.html"><img src="home.png" height="25px" style="margin-right:8px; padding-bottom:3px;">HOME</a></li>
-        <li><a href="about.html"><img src="about.png" height="25px" style="margin-right:8px; padding-bottom:3px;">ABOUT</a></li>
-        <li><a href="wbp-syllabus.html"><img src="syllabus.png" height="25px" style="margin-right:8px; padding-bottom:3px;">SYLLABUS</a></li>
-        <li><a href="wbp-notice.html"><img src="notice.png" height="25px" style="margin-right:8px; padding-bottom:3px;">NOTICE</a></li>
-        <li><a href="mock-test.html"><img src="mock-test.png" height="25px" style="margin-right:8px; padding-bottom:3px;">MOCK-TEST</a></li>
-      </ul>
-    </div>
-
-    <label for="menu" class="big-checkbox"></label>
-
-    <br>
-    <h2><font color="orange">T</font><font color="teal">W</font><font color="orange">S</font></h2>
-    <p class="styling">The Way Of Solution</p>
-
-    <h1 style="color:red;text-align:center;font-size:14px;margin-top:5px;letter-spacing:2px;">&#10083 ALL TOPICS &#10083</h1>
-    <h1 style="text-align:center;">Welcome to TWS 2.0</h1>
-    <br>
-    <p style="font-size:20px;margin-bottom:20px;font-weight:bold;text-align:center;">The Way of Solution 2.0 – 
-      <span style="color: cyan;"><i>Learn Everything in Bengali</i></span>
-    </p>
-
-    <center><h3 style="font-size:20px; color:lightgreen; text-decoration: dotted underline;" >CLASSES</h3></center>
-
-    <div class="subject-section">
-      <a href="math.html" class="subject-box math">MATH</a>
-      <a href="reasoning.html" class="subject-box reasoning">REASONING</a>
-      <a href="polity.html" class="subject-box polity">POLITY</a>
-      <a href="history.html" class="subject-box history">HISTORY</a>
-      <a href="geography.html" class="subject-box geography">GEOGRAPHY</a>
-      <a href="staticgk.html" class="subject-box gk">STATIC GK</a>
-      <a href="english.html" class="subject-box math">ENGLISH</a>
-      <a href="current-affairs.html" class="subject-box reasoning">CURRENT AFFAIRS</a>
-      <a href="physics.html" class="subject-box polity">PHYSICS</a>
-      <a href="chemistry.html" class="subject-box history">CHEMISTRY</a>
-      <a href="economy.html" class="subject-box geography">ECONOMY</a>
-      <a href="computer.html" class="subject-box gk">COMPUTER</a>
-    </div>
-
-    <div class="features"> 
-      <div class="details">
-        <div style="font-size:30px;display:flex;justify-content:center;align-items:center;">🔰</div>
-        <div style="font-size:18px;font-family:সাবির ২ UNICODE;color:yellow;">এখানে বিভিন্ন ধরনের অংক সহজ ও সরল উপায়ে করানো হয়েছে SHORT TRICK এর মাধ্যমে !</div>
-      </div>
-   
-      <div class="details" style="border:1.6px solid red;">
-        <div style="font-size:30px;display:flex;justify-content:center;align-items:center;">🔰</div>
-        <div style="font-size:18px;font-family:সাবির ২ UNICODE;">এখানে  বিভিন্ন ধরনের PAID COURSE এর ক্লাসগুলির PDF সম্পূর্ণ FREE তে পাবে !</div>
-      </div>
-      
-      <div class="details" style="border:1.6px solid lightgreen;">
-        <div style="font-size:30px;display:flex;justify-content:center;align-items:center;">🔰</div>
-        <div style="font-size:18px;font-family:সাবির ২ UNICODE;color:lightblue;">এর পাশাপাশি রয়েছে FREE MOCK TEST যেটি তোমার PRACTICE এ অত্যন্ত সাহায্য করবে !</div>
-      </div>
-    </div>
-
-    <footer>
-      <div class="row">
-        <div class="col">
-          <img src="logo.png" class="logo">
-          <p>Improve your Skills and</p>
-          <p><font color="yellow">Learn something new</font></p>
-        </div>
-
-        <div class="col">
-          <h3>OFFICE<div class="underline"><span></span></div></h3>
-          <p><img src="location.png" class="location"> Siliguri More</p>
-          <p>Raiganj, Near Bank of Baroda</p>
-          <p>Uttar Dinajpur, West Bengal,</p>
-          <p>Pin-733134, India</p>       
-        </div>
-
-        <div class="col">
-          <h3>CONTACT<div class="underline"><span></span></div></h3>
-          <p>Name- Sujit Barman</p>
-          <p><img src="phone.png" class="mobile"> +91 5234595250</p>
-          <p>Helpline No. - 188079326131</p>
-          <p><img src="message.png" class="email"> sujitbar44@gmail.com</p> 
-        </div>
-
-        <div class="col"> 
-          <h3>FOLLOW<div class="underline"><span></span></div></h3>
-          <a href="https://youtube.com/@bhujpurisdon?si=FPFCghUTy-Lmceax"><img class="youtube" src="youtube.png"></a>
-          <a href="https://www.facebook.com/share/1YBSWHHgi2/"><img class="youtube" src="facebook.png"></a>
-          <a href="#"><img class="youtube" src="Instagram.png"></a>
-          <a href="https://whatsapp.com/channel/0029VbAMiLS4SpkAcNz3He3E"><img class="youtube" src="whatsapp.png"></a>
-          <a href="#"><img class="youtube" src="email.png"></a>
-        </div>
-      </div>
-      <br>
-      <center>
-        <hr style="border:1px dotted yellow;margin-top:-10px;width:83%;">
-        <p class="copyright">&#169 Copyright @2025 All Right Reserve West Bengal, India</p>
-      </center>
-      <br>
-      <center>
-        D<sub>e</sub> V<sup>e</sup> <mark>L<sub>o</sub> V<sup>e</sup></mark>
-        <br>by &#11015;<br><br>
-        <font size="5" color="red">&#10083;</font> &#160 
-        <font face="sans-serif" size="7" color="orange">S</font>ujit &#160 &#10133;
-        <font face="sans-serif" size="6" color="red">B</font>arman  
-        &#160 <font size="5" color="red">&#10083;</font>
-      </center>
-    </footer>
+  <div class="col">
+    <h3>OFFICE<div class="underline"><span></span></div></h3>
+    <p><img src="location.png" class="location"> Siliguri More</p>
+    <p>Raiganj, Near Bank of Baroda</p>
+    <p>Uttar Dinajpur, West Bengal,</p>
+    <p>Pin-733134, India</p>
   </div>
-  
-  
- <!-- <div id="preloader">
-  <div class="loader-circle"></div>
-  <p>Please wait...</p>
+
+  <div class="col">
+    <h3>CONTACT<div class="underline"><span></span></div></h3>
+    <p>Name- Sujit Barman</p>
+    <p><img src="phone.png" class="mobile"> +91 5234595250</p>
+    <p>Helpline No. - 188079326131</p>
+    <p><img src="message.png" class="email"> sujitbar44@gmail.com</p>
   </div>
-  
- <!-- 
-  <script>
-  window.onload = function() {
-  // পেজ পুরোপুরি লোড হওয়ার পর এই ফাংশনটি চলবে
-  document.getElementById("preloader").style.display = "none";
-  document.getElementById("main-content").style.display = "block";
-  };
-  </script>
 
-  <script>
-    // ===== ফায়ারবেস কনফিগারেশন =====
-    /*
-    const firebaseConfig = {
-      apiKey: "AIzaSyDummyKey123456789",
-      authDomain: "project-admin-e6d6e.firebaseapp.com",
-      databaseURL: "https://project-admin-e6d6e-default-rtdb.firebaseio.com/",
-      projectId: "project-admin-e6d6e",
-      storageBucket: "project-admin-e6d6e.appspot.com",
-      messagingSenderId: "123456789",
-      appId: "1:123456789:web:abc123def456"
-    };
+  <div class="col">
+    <h3>FOLLOW<div class="underline"><span></span></div></h3>
 
-    // ===== Razorpay কী =====
-    const RAZORPAY_KEY = "rzp_live_SGRzpnF9NTxFhS";
+    <a href="https://youtube.com/@bhujpurisdon?si=FPFCghUTy-Lmceax">
+      <img class="youtube" src="youtube.png">
+    </a>
 
-    // ===== প্যাকেজ লিস্ট =====
-    const PACKAGES = [
-      { id: '10min', name: '⚡ 10 Min', duration: '10 Minutes', price: 1, expiryMs: 10 * 60 * 1000, popular: false },
-      { id: '1day', name: '📅 1 Day', duration: '24 Hours', price: 5, expiryMs: 24 * 60 * 60 * 1000, popular: false },
-      { id: '3days', name: '🔥 3 Days', duration: '3 Days', price: 10, expiryMs: 3 * 24 * 60 * 60 * 1000, popular: true },
-      { id: '7days', name: '📅 7 Days', duration: '7 Days', price: 25, expiryMs: 7 * 24 * 60 * 60 * 1000, popular: false },
-      { id: '30days', name: '📆 30 Days', duration: '1 Month', price: 50, expiryMs: 30 * 24 * 60 * 60 * 1000, popular: false },
-      { id: '3months', name: '📆 3 Months', duration: '3 Months', price: 90, expiryMs: 90 * 24 * 60 * 60 * 1000, popular: false },
-      { id: '1year', name: '⭐ 1 Year', duration: '12 Months', price: 200, expiryMs: 365 * 24 * 60 * 60 * 1000, popular: false },
-      { id: '2years', name: '⭐⭐ 2 Years', duration: '24 Months', price: 320, expiryMs: 730 * 24 * 60 * 60 * 1000, popular: false },
-      { id: 'lifetime', name: '👑 LIFETIME', duration: 'Permanent', price: 500, expiryMs: 100 * 365 * 24 * 60 * 60 * 1000, popular: true }
-    ];
+    <a href="https://www.facebook.com/share/1YBSWHHgi2/">
+      <img class="youtube" src="facebook.png">
+    </a>
 
-    // ফায়ারবেস ইনিশিয়ালাইজ
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    <a href="#"><img class="youtube" src="Instagram.png"></a>
 
-    // ===== DOM এলিমেন্টস =====
-    const mainContent = document.getElementById('mainContent');
-    const loginOverlay = document.getElementById('loginOverlay');
-    const registerOverlay = document.getElementById('registerOverlay');
-    const paymentOverlay = document.getElementById('paymentOverlay');
-    const profilePopup = document.getElementById('profilePopup');
-    const notification = document.getElementById('notification');
+    <a href="https://whatsapp.com/channel/0029VbAMiLS4SpkAcNz3He3E">
+      <img class="youtube" src="whatsapp.png">
+    </a>
 
-    // প্রোফাইল এলিমেন্টস
-    const profileAvatar = document.getElementById('profileAvatar');
-    const profileName = document.getElementById('profileName');
+    <a href="#"><img class="youtube" src="email.png"></a>
+  </div>
 
-    // পপ-আপ এলিমেন্টস
-    const popupAvatar = document.getElementById('popupAvatar');
-    const popupName = document.getElementById('popupName');
-    const popupEmail = document.getElementById('popupEmail');
-    const popupPhone = document.getElementById('popupPhone');
-    const popupJoined = document.getElementById('popupJoined');
-    const popupExpiry = document.getElementById('popupExpiry');
+</div>
 
-    // পেমেন্ট এলিমেন্টস
-    const packagesContainer = document.getElementById('packagesContainer');
-    const selectedPlan = document.getElementById('selectedPlan');
-    const selectedName = document.getElementById('selectedName');
-    const selectedPrice = document.getElementById('selectedPrice');
-    const selectedDuration = document.getElementById('selectedDuration');
-    const payNowBtn = document.getElementById('payNowBtn');
-    const paymentUserInfo = document.getElementById('paymentUserInfo');
+<br>
 
-    // ===== গ্লোবাল ভেরিয়েবল =====
-    let currentUser = null;
-    let currentPayment = null;
-    let selectedPackage = null;
+<center>
+  <hr style="border:1px dotted yellow;margin-top:-10px;width:83%;">
+  <p class="copyright">&#169 Copyright @2025 All Right Reserve West Bengal, India</p>
+</center>
 
-    // ===== পেজ লোড হলে =====
-    window.onload = function() {
-      const userId = localStorage.getItem('userId');
-      if (userId) {
-        db.ref('users/' + userId).once('value').then(snapshot => {
-          if (snapshot.exists()) {
-            currentUser = snapshot.val();
-            checkActivePlan();
-          } else {
-            showLoginModal();
-          }
-        });
-      } else {
-        showLoginModal();
-      }
-    };
+<br>
 
-    // ===== অ্যাক্টিভ প্ল্যান চেক =====
-    function checkActivePlan() {
-      if (!currentUser) return;
+<center>
+  D<sub>e</sub> V<sup>e</sup> <mark>L<sub>o</sub> V<sup>e</sup></mark>
+  <br>by &#11015;<br><br>
 
-      db.ref('payments').orderByChild('userId').equalTo(currentUser.id).once('value')
-        .then(snapshot => {
-          let activePayment = null;
-          if (snapshot.exists()) {
-            snapshot.forEach(child => {
-              const pay = child.val();
-              if (pay.expiryTime && pay.expiryTime > Date.now()) {
-                activePayment = pay;
-              }
-            });
-          }
+  <font size="5" color="red">&#10083;</font>&#160;
+  <font face="sans-serif" size="7" color="orange">S</font>ujit &#160;&#10133;
+  <font face="sans-serif" size="6" color="red">B</font>arman
+  &#160;<font size="5" color="red">&#10083;</font>
+</center>
 
-          if (activePayment) {
-            currentPayment = activePayment;
-            updateProfileUI();
-          } else {
-            currentPayment = null;
-            updateProfileUI();
-            showPaymentModal();
-          }
-        });
-    }
+</footer>
 
-    // ===== প্রোফাইল UI আপডেট =====
-    function updateProfileUI() {
-      if (!currentUser) return;
+</div>
 
-      const firstLetter = currentUser.name.charAt(0).toUpperCase();
-      
-      profileAvatar.textContent = firstLetter;
-      profileName.textContent = currentUser.name.length > 8 ? currentUser.name.substring(0,8)+'..' : currentUser.name;
-
-      popupAvatar.textContent = firstLetter;
-      popupName.textContent = currentUser.name;
-      popupEmail.textContent = currentUser.email;
-      popupPhone.textContent = currentUser.phone;
-      
-      const joinDate = currentUser.registered ? new Date(currentUser.registered).toLocaleDateString('en-IN', { month:'short', year:'numeric' }) : 'Jan 2026';
-      popupJoined.textContent = joinDate;
-
-      if (currentPayment) {
-        const expiryDate = new Date(currentPayment.expiryTime).toLocaleDateString('en-IN', { 
-          day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' 
-        });
-        popupExpiry.textContent = expiryDate;
-      } else {
-        popupExpiry.textContent = 'No active plan';
-      }
-    }
-
-    // ===== মোডাল কন্ট্রোল =====
-    function showLoginModal() {
-      loginOverlay.classList.add('active');
-    }
-
-    function closeLoginModal() {
-      loginOverlay.classList.remove('active');
-      // পপ-আপ ক্লোজ করলেও লগইন না করা পর্যন্ত আবার দেখাও
-      if (!currentUser) {
-        setTimeout(() => showLoginModal(), 100);
-      }
-    }
-
-    function showRegisterModal() {
-      closeLoginModal();
-      registerOverlay.classList.add('active');
-    }
-
-    function closeRegisterModal() {
-      registerOverlay.classList.remove('active');
-    }
-
-    function showPaymentModal() {
-      if (!currentUser) return;
-      
-      loadPackages();
-      paymentUserInfo.innerHTML = `
-        <p><strong>${currentUser.name}</strong></p>
-        <p>📧 ${currentUser.email}</p>
-        <p>📞 ${currentUser.phone}</p>
-      `;
-      
-      paymentOverlay.classList.add('active');
-    }
-
-    function closePaymentModal() {
-      paymentOverlay.classList.remove('active');
-      checkActivePlan();
-    }
-
-    // ===== প্যাকেজ লোড =====
-    function loadPackages() {
-      packagesContainer.innerHTML = '';
-      PACKAGES.forEach(pkg => {
-        const card = document.createElement('div');
-        card.className = `package-card ${pkg.popular ? 'popular' : ''}`;
-        if (pkg.popular) {
-          card.innerHTML += '<div class="popular-badge">🔥 POPULAR</div>';
-        }
-        card.innerHTML += `
-          <div class="package-icon">${pkg.name.split(' ')[0]}</div>
-          <div class="package-name">${pkg.name}</div>
-          <div class="package-price">${pkg.price}</div>
-          <div class="package-duration">${pkg.duration}</div>
-        `;
-        card.onclick = () => selectPackage(pkg, card);
-        packagesContainer.appendChild(card);
-      });
-    }
-
-    // ===== প্যাকেজ সিলেক্ট =====
-    function selectPackage(pkg, card) {
-      selectedPackage = pkg;
-      
-      document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      
-      selectedName.textContent = pkg.name;
-      selectedPrice.textContent = pkg.price;
-      selectedDuration.textContent = pkg.duration;
-      selectedPlan.classList.remove('hidden');
-      
-      payNowBtn.disabled = false;
-      payNowBtn.textContent = `Pay ₹${pkg.price}`;
-    }
-
-    // ===== পেমেন্ট প্রসেস =====
-    function processPayment() {
-      if (!selectedPackage || !currentUser) return;
-
-      payNowBtn.disabled = true;
-      payNowBtn.innerHTML = 'Processing...';
-
-      const expiryTime = Date.now() + selectedPackage.expiryMs;
-
-      const options = {
-        key: RAZORPAY_KEY,
-        amount: selectedPackage.price * 100,
-        currency: "INR",
-        name: "TWS 2.0",
-        description: selectedPackage.name,
-        handler: function(response) {
-          const paymentRecord = {
-            paymentId: response.razorpay_payment_id,
-            userId: currentUser.id,
-            userName: currentUser.name,
-            userEmail: currentUser.email,
-            userPhone: currentUser.phone,
-            package: selectedPackage,
-            amount: selectedPackage.price,
-            expiryTime: expiryTime,
-            purchaseTime: Date.now()
-          };
-
-          db.ref('payments/' + response.razorpay_payment_id).set(paymentRecord)
-            .then(() => {
-              showNotification('✅ Payment successful!', 'success');
-              closePaymentModal();
-              checkActivePlan();
-            })
-            .catch(() => {
-              showNotification('❌ Error saving payment', 'error');
-            })
-            .finally(() => {
-              payNowBtn.disabled = false;
-              payNowBtn.textContent = `Pay ₹${selectedPackage.price}`;
-            });
-        },
-        prefill: {
-          name: currentUser.name,
-          email: currentUser.email,
-          contact: currentUser.phone
-        },
-        theme: { color: "#4361ee" },
-        modal: {
-          ondismiss: function() {
-            payNowBtn.disabled = false;
-            payNowBtn.textContent = `Pay ₹${selectedPackage.price}`;
-          }
-        }
-      };
-
-      try {
-        const rzp = new Razorpay(options);
-        rzp.open();
-      } catch (error) {
-        showNotification('❌ Payment error', 'error');
-        payNowBtn.disabled = false;
-        payNowBtn.textContent = `Pay ₹${selectedPackage.price}`;
-      }
-    }
-
-    // ===== প্রোফাইল পপ-আপ =====
-    function toggleProfilePopup() {
-      if (currentUser) {
-        profilePopup.classList.toggle('active');
-      } else {
-        showLoginModal();
-      }
-    }
-
-    // পপ-আপের বাইরে ক্লিক করলে বন্ধ হবে
-    document.addEventListener('click', function(e) {
-      if (!e.target.closest('.profile-popup') && !e.target.closest('#profileAvatar') && !e.target.closest('#profileName')) {
-        profilePopup.classList.remove('active');
-      }
-    });
-
-    // ===== রেজিস্ট্রেশন =====
-    function handleRegister() {
-      const name = document.getElementById('regName').value.trim();
-      const email = document.getElementById('regEmail').value.trim();
-      const phone = document.getElementById('regPhone').value.trim();
-      const pass = document.getElementById('regPassword').value.trim();
-      const confirm = document.getElementById('regConfirm').value.trim();
-
-      if (!name || !email || !phone || !pass) {
-        showNotification('All fields required', 'error');
-        return;
-      }
-      if (pass !== confirm) {
-        showNotification('Passwords do not match', 'error');
-        return;
-      }
-
-      const btn = event.target;
-      btn.disabled = true;
-      btn.innerHTML = 'Processing...';
-
-      const userId = 'user_' + Date.now();
-      const userData = {
-        id: userId, name, email, phone,
-        password: btoa(pass),
-        registered: Date.now()
-      };
-
-      db.ref('users/' + userId).set(userData)
-        .then(() => {
-          showNotification('✅ Registration successful! Please login.', 'success');
-          closeRegisterModal();
-          showLoginModal();
-          clearRegisterFields();
-        })
-        .catch(() => showNotification('❌ Error', 'error'))
-        .finally(() => {
-          btn.disabled = false;
-          btn.innerHTML = 'Register';
-        });
-    }
-
-    // ===== লগইন =====
-    function handleLogin() {
-      const email = document.getElementById('loginEmail').value.trim();
-      const pass = document.getElementById('loginPassword').value.trim();
-
-      if (!email || !pass) {
-        showNotification('Email and password required', 'error');
-        return;
-      }
-
-      const btn = event.target;
-      btn.disabled = true;
-      btn.innerHTML = 'Processing...';
-
-      db.ref('users').orderByChild('email').equalTo(email).once('value')
-        .then(snapshot => {
-          if (!snapshot.exists()) {
-            showNotification('User not found', 'error');
-            return;
-          }
-
-          let userData = null;
-          snapshot.forEach(child => {
-            const user = child.val();
-            if (atob(user.password) === pass) {
-              userData = user;
-            }
-          });
-
-          if (!userData) {
-            showNotification('Invalid password', 'error');
-            return;
-          }
-
-          currentUser = userData;
-          localStorage.setItem('userId', userData.id);
-          
-          closeLoginModal();
-          showNotification('✅ Welcome ' + userData.name, 'success');
-          checkActivePlan();
-        })
-        .catch(() => showNotification('❌ Error', 'error'))
-        .finally(() => {
-          btn.disabled = false;
-          btn.innerHTML = 'Login';
-        });
-    }
-
-    // ===== লগআউট =====
-    function handleLogout() {
-      localStorage.removeItem('userId');
-      currentUser = null;
-      currentPayment = null;
-      
-      profileAvatar.textContent = '👤';
-      profileName.textContent = 'Login';
-      profilePopup.classList.remove('active');
-      
-      showNotification('✅ Logout successful', 'success');
-      showLoginModal();
-    }
-
-    // ===== হেল্পার ফাংশন =====
-    function clearRegisterFields() {
-      document.getElementById('regName').value = '';
-      document.getElementById('regEmail').value = '';
-      document.getElementById('regPhone').value = '';
-      document.getElementById('regPassword').value = '';
-      document.getElementById('regConfirm').value = '';
-    }
-
-    function showNotification(msg, type = 'success') {
-      notification.textContent = msg;
-      notification.className = 'notification show ' + type;
-      setTimeout(() => notification.classList.remove('show'), 3000);
-    }
-
-    // গ্লোবাল ফাংশন
-    window.showLoginModal = showLoginModal;
-    window.closeLoginModal = closeLoginModal;
-    window.showRegisterModal = showRegisterModal;
-    window.closeRegisterModal = closeRegisterModal;
-    window.showPaymentModal = showPaymentModal;
-    window.closePaymentModal = closePaymentModal;
-    window.toggleProfilePopup = toggleProfilePopup;
-    window.handleRegister = handleRegister;
-    window.handleLogin = handleLogin;
-    window.handleLogout = handleLogout;
-    window.processPayment = processPayment; */
-  </script>
 </body>
 </html>
