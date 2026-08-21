@@ -717,27 +717,27 @@
   }
 
   .hidden { display: none !important; }
+/*  
   
-  /* লোডিং এনিমেশনের জন্য নতুন স্টাইল */
   #preloader {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #1e1e1e; /* পেজের ব্যাকগ্রাউন্ডের সাথে মিল রেখে */
+  background-color: #1e1e1e; 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* যেন এটি সবার উপরে থাকে */
+  z-index: 9999; 
   }
   
   .loader-circle {
   width: 50px;
   height: 50px;
   border: 5px solid #333;
-  border-top: 5px solid orange; /* আপনার লোগোর কালারের সাথে মিল রেখে */
+  border-top: 5px solid orange; 
   border-radius: 50%;
   animation: spin 1s linear infinite;
   }
@@ -755,10 +755,11 @@
   100% { transform: rotate(360deg); }
   }
   
-  /* লোড হওয়ার পর কন্টেন্ট দেখানোর জন্য */
+  
   .loaded-content {
   display: none;
   }
+  */
   
   </style>
 </head>
@@ -1004,11 +1005,12 @@
   </div>
   
   
-  <div id="preloader">
+ <!-- <div id="preloader">
   <div class="loader-circle"></div>
   <p>Please wait...</p>
   </div>
   
+ <!-- 
   <script>
   window.onload = function() {
   // পেজ পুরোপুরি লোড হওয়ার পর এই ফাংশনটি চলবে
