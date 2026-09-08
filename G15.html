@@ -2,23 +2,341 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>age all class</title>
-    <link rel="stylesheet" href="styles.css">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Age All Class</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            background: #ffffff;
+            transition: background 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           IMAGE
+        ========================= */
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+
+            transition:
+                filter 0.35s ease,
+                opacity 0.35s ease;
+        }
+
+
+        /* =========================
+           DARK MODE
+        ========================= */
+
+        body.dark-mode {
+            background: #121212;
+        }
+
+        /*
+          Image dark mode:
+          Black areas stay dark,
+          white/light areas become dark.
+        */
+
+        body.dark-mode img {
+            filter:
+                invert(0.90)
+                hue-rotate(180deg)
+                brightness(0.75)
+                contrast(0.95);
+        }
+
+
+        /* =========================
+           THEME BUTTON
+        ========================= */
+
+        #theme-toggle {
+
+            position: fixed;
+
+            top: 70px;
+            right: 15px;
+
+            width: 44px;
+            height: 44px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.95);
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.20);
+
+            font-size: 21px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: grab;
+
+            /*
+              Lower than other important buttons
+            */
+            z-index: 50;
+
+            touch-action: none;
+
+            transition:
+                background 0.3s ease,
+                transform 0.15s ease;
+        }
+
+        #theme-toggle:active {
+            cursor: grabbing;
+            transform: scale(0.92);
+        }
+
+        body.dark-mode #theme-toggle {
+            background: #1e293b;
+            color: white;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.50);
+        }
+
+    </style>
 </head>
+
 <body>
 
-<img src="G15 _ ভারতের ভূগোল মক টেস্ট by Alamin Sir.png" >
+    <!-- IMAGE -->
+
+    <img
+        src="G15 _ ভারতের ভূগোল মক টেস্ট by Alamin Sir.png"
+        alt="ভারতের ভূগোল মক টেস্ট"
+    >
+
+
+    <!-- DARK MODE BUTTON -->
+
+    <button
+        id="theme-toggle"
+        aria-label="Toggle Dark Mode"
+        title="Dark / Light Mode">
+        🌙
+    </button>
+
+
+    <script>
+
+        /* ==========================================
+           DARK / LIGHT MODE
+        ========================================== */
+
+        const themeButton =
+            document.getElementById("theme-toggle");
+
+        const savedTheme =
+            localStorage.getItem("imagePageTheme");
+
+        if (savedTheme === "dark") {
+            document.body.classList.add("dark-mode");
+            themeButton.innerText = "☀️";
+        }
+
+
+        themeButton.addEventListener("click", function () {
+
+            document.body.classList.toggle("dark-mode");
+
+            const isDark =
+                document.body.classList.contains("dark-mode");
+
+            if (isDark) {
+
+                themeButton.innerText = "☀️";
+
+                localStorage.setItem(
+                    "imagePageTheme",
+                    "dark"
+                );
+
+            } else {
+
+                themeButton.innerText = "🌙";
+
+                localStorage.setItem(
+                    "imagePageTheme",
+                    "light"
+                );
+            }
+
+        });
+
+
+        /* ==========================================
+           DRAGGABLE BUTTON
+        ========================================== */
+
+        let isDragging = false;
+
+        let startX = 0;
+        let startY = 0;
+
+        let initialLeft = 0;
+        let initialTop = 0;
+
+
+        themeButton.addEventListener(
+            "pointerdown",
+            startDrag
+        );
+
+        document.addEventListener(
+            "pointermove",
+            drag
+        );
+
+        document.addEventListener(
+            "pointerup",
+            stopDrag
+        );
+
+
+        function startDrag(e) {
+
+            isDragging = true;
+
+            const rect =
+                themeButton.getBoundingClientRect();
+
+            startX = e.clientX;
+            startY = e.clientY;
+
+            initialLeft = rect.left;
+            initialTop = rect.top;
+
+            themeButton.style.left =
+                initialLeft + "px";
+
+            themeButton.style.top =
+                initialTop + "px";
+
+            themeButton.style.right = "auto";
+        }
+
+
+        function drag(e) {
+
+            if (!isDragging) return;
+
+            let newLeft =
+                initialLeft +
+                (e.clientX - startX);
+
+            let newTop =
+                initialTop +
+                (e.clientY - startY);
+
+
+            /* Keep button inside screen */
+
+            const maxLeft =
+                window.innerWidth -
+                themeButton.offsetWidth;
+
+            const maxTop =
+                window.innerHeight -
+                themeButton.offsetHeight;
+
+
+            newLeft =
+                Math.max(
+                    0,
+                    Math.min(newLeft, maxLeft)
+                );
+
+            newTop =
+                Math.max(
+                    0,
+                    Math.min(newTop, maxTop)
+                );
+
+
+            themeButton.style.left =
+                newLeft + "px";
+
+            themeButton.style.top =
+                newTop + "px";
+        }
+
+
+        function stopDrag() {
+
+            if (!isDragging) return;
+
+            isDragging = false;
+
+
+            /* Save position */
+
+            localStorage.setItem(
+                "themeButtonLeft",
+                themeButton.style.left
+            );
+
+            localStorage.setItem(
+                "themeButtonTop",
+                themeButton.style.top
+            );
+        }
+
+
+        /* ==========================================
+           RESTORE BUTTON POSITION
+        ========================================== */
+
+        const savedLeft =
+            localStorage.getItem(
+                "themeButtonLeft"
+            );
+
+        const savedTop =
+            localStorage.getItem(
+                "themeButtonTop"
+            );
+
+
+        if (savedLeft && savedTop) {
+
+            themeButton.style.left =
+                savedLeft;
+
+            themeButton.style.top =
+                savedTop;
+
+            themeButton.style.right =
+                "auto";
+        }
+
+    </script>
 
 </body>
 </html>
-<style>
-
-body{
-margin:0;
-padding:0;
-}
- img{
-  width:100%;
- }
-</style>
