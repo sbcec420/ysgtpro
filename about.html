@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us & Introduction | Team Sujit Barman</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:সাবির ২ UNICODE, 'Poppins', Arial, sans-serif;
+  user-select:none;
+  font-weight:50;
+}
+
+@font-face{
+  font-family:রাজন শৈলী UNICODE;
+  src:url('রাজন শৈলী UNICODE.ttf');
+}
+
+@font-face{
+  font-family:সাবির ২ UNICODE;
+  src:url("সাবির ২ UNICODE.ttf");
+}
+
+body{
+  background:#1e1e1e;
+  color:#fff;
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+}
+
+/* ===== NAVBAR ===== */
+
+.nav-bar{
+  width:100%;
+  height:60px;
+  border:1px solid red;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  background:linear-gradient(to right,orange,white,green);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+#menu{display:none;}
+
+.nav-logo{
+  height:58px;
+  width:58px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:50%;
+  position:absolute;
+  right:50%;
+  transform:translateX(50%);
+}
+
+.nav-logo img{
+  height:54px;
+  width:54px;
+  border-radius:50%;
+}
+
+.menu-icon{
+  font-size:50px;
+  transition:.3s;
+  margin-right:15px;
+  color:#000;
+  cursor:pointer;
+}
+
+.menu-icon::before{content:"≡";}
+
+#menu:checked+.nav-bar .menu-icon::before{content:"×";}
+
+/* ===== SIDE MENU ===== */
+
+.slider{
+  height:100%;
+  width:180px;
+  background:#fff;
+  position:fixed;
+  top:60px;
+  right:-310px;
+  z-index:20;
+  transition:.4s ease;
+}
+
+.slider ul{list-style:none;}
+
+.slider ul li{
+  height:44px;
+  width:100%;
+  display:flex;
+  align-items:center;
+  border-bottom:1px solid green;
+}
+
+.slider ul li:hover{
+  background-color:fuchsia;
+  color:orange;
+}
+
+.slider ul li a{
+  width:100%;
+  height:100%;
+  color:purple;
+  text-decoration:none;
+  font-weight:bolder;
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+  margin-left:18px;
+}
+
+#menu:checked~.slider{right:0;}
+
+.big-checkbox{
+  height:100%;
+  width:100%;
+  background:rgba(0,0,0,.6);
+  position:fixed;
+  top:0;
+  left:0;
+  visibility:hidden;
+  z-index:15;
+}
+
+#menu:checked~.big-checkbox{visibility:visible;}
+
+/* ===== PROFESSIONAL ABOUT CONTAINER ===== */
+
+.about-main-wrapper {
+  max-width: 650px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.about-card {
+  background: #2a2a2a;
+  border: 2px solid orange;
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 25px rgba(255, 140, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.about-card:hover {
+  transform: translateY(-3px);
+}
+
+.about-card h2 {
+  color: orange;
+  font-size: 22px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 8px;
+  letter-spacing: normal;
+  text-align: left;
+  padding-left: 0;
+}
+
+.about-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #ddd;
+  margin-bottom: 10px;
+}
+
+/* Specific Section Styles for My Introduction */
+.my-intro-card {
+  border-color: #00ffcc;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1f2b2b 100%);
+  box-shadow: 0 10px 25px rgba(0, 255, 204, 0.15);
+}
+
+.my-intro-card h2 {
+  color: #00ffcc;
+  border-bottom-color: #333;
+}
+
+.profile-flex {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.profile-img-box {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #00ffcc;
+  overflow: hidden;
+  background: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 5px 15px rgba(0,255,204,0.3);
+}
+
+.profile-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-info h3 {
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.profile-info span {
+  font-size: 13px;
+  color: #00ffcc;
+  font-weight: 600;
+}
+
+.feature-list {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.feature-list li {
+  font-size: 14px;
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ccc;
+}
+
+.feature-list li::before {
+  content: "✔";
+  color: orange;
+  font-weight: bold;
+}
+
+/* ===== FOOTER ===== */
+
+footer{
+  width:100%;
+  background:linear-gradient(to right,#00093c,#2d0b00);
+  color:#fff;
+  border-top-left-radius:70px;
+  font-size:13px;
+  line-height:15px;
+  margin-top: 40px;
+}
+
+.row{
+  width:93%;
+  margin:auto;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:13px;
+  padding:10px;
+}
+
+.col{
+  padding-left:9px;
+  height:120px;
+  width:150px;
+}
+
+.col h3{
+  color:orange;
+  width:fit-content;
+  margin:5px 0 20px;
+  position:relative;
+  font-size:17px;
+  font-weight:bolder;
+}
+
+.col p{
+  font-size:11px;
+  line-height:13px;
+  margin-bottom:1px;
+}
+
+.logo{
+  height:73px;
+  width:118px;
+  border-radius:5px;
+  margin:10px 0 0 3px;
+}
+
+.underline{
+  width:100%;
+  height:5px;
+  background:olive;
+  border-radius:3px;
+  position:absolute;
+  overflow:hidden;
+  margin-top:6px;
+}
+
+.underline span{
+  width:15px;
+  height:100%;
+  background:linear-gradient(to right,orange,white,green);
+  border-radius:3px;
+  position:absolute;
+  animation:moving 1.87s linear infinite alternate;
+}
+
+@keyframes moving{
+  0%{left:-40%;}
+  100%{left:120%;}
+}
+
+.location{height:11.5px;}
+.mobile{height:11px;}
+
+.youtube{
+  height:27px;
+  width:27px;
+  font-size:30px;
+  margin-top:10px;
+  margin-right:12px;
+  box-shadow:3px 5px 10px white;
+  border-radius:50%;
+}
+
+.email{
+  height:9.3px;
+  padding-top:2px;
+}
+
+.copyright{
+  font-size:11px;
+  word-spacing:3px;
+  margin-top:-15px;
+  text-align: center;
+  padding-bottom: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<input type="checkbox" id="menu">
+
+<div class="nav-bar">
+  <div class="nav-logo"><img src="logo.png" alt="Logo"></div>
+  <label for="menu" class="menu-icon"></label>
+</div>
+
+<div class="slider">
+  <ul>
+    <li><a href="index.html"><img src="home.png" height="25px" style="margin-right:8px;padding-bottom:3px;" alt="">HOME</a></li>
+    <li><a href="about.html"><img src="about.png" height="25px" style="margin-right:8px;padding-bottom:3px;" alt="">ABOUT</a></li>
+    <li><a href="wbp-syllabus.html"><img src="syllabus.png" height="25px" style="margin-right:8px;padding-bottom:3px;" alt="">SYLLABUS</a></li>
+    <li><a href="wbp-notice.html"><img src="notice.png" height="25px" style="margin-right:8px;padding-bottom:3px;" alt="">NOTICE</a></li>
+    <li><a href="mock-test.html"><img src="mock-test.png" height="25px" style="margin-right:8px;padding-bottom:3px;" alt="">MOCK-TEST</a></li>
+  </ul>
+</div>
+
+<label for="menu" class="big-checkbox"></label>
+
+<!-- ===== MAIN CONTENT ===== -->
+
+<div class="about-main-wrapper">
+
+  <!-- 1. My Introduction (First Priority) -->
+  <div class="about-card my-intro-card">
+    <h2>👨‍💻 My Introduction</h2>
+    <div class="profile-flex">
+      <div class="profile-img-box">
+        <img src="me.png" alt="Sujit Barman">
+      </div>
+      <div class="profile-info">
+        <h3>Sujit Barman</h3>
+        <span>Founder & Educator, The Way of Solution</span>
+      </div>
+    </div>
+    <p style="margin-top: 15px;">
+      নমস্কার! আমি সুজিত বর্মন। একজন প্যাশনেট অ্যাপ ডেভেলপার এবং শিক্ষাবিদ। শিক্ষা এবং প্রযুক্তির সঠিক মেলবন্ধনে পশ্চিমবঙ্গের ছাত্র-ছাত্রীদের আধুনিক ও স্মার্ট উপায়ে এগিয়ে নিয়ে যেতেই আমার এই প্রচেষ্টা। একজন দক্ষ ডেভেলপার হিসেবে আমি সবসময় ইউজার-ফ্রেন্ডলি, রেসপন্সিভ এবং ফাস্ট-লোডিং ওয়েব ও মোবাইল অ্যাপ্লিকেশন তৈরিতে ফোকাস করি। আধুনিক টেকনোলজি যেমন—HTML5, CSS3, JavaScript এবং রেসপন্সিভ ডিজাইন ব্যবহার করে অ্যাপের পারফরম্যান্স ও ইউজার এক্সপেরিয়েন্সকে সেরা পর্যায়ে নিয়ে যাওয়াই আমার মূল লক্ষ্য। আপনার সফলতার যাত্রায় সর্বদা পাশে থাকতে আমরা বদ্ধপরিকর।
+      
+    </p>
+  </div>
+
+  <!-- 2. About App -->
+  <div class="about-card">
+    <h2>📱 About App (TWS 2.0)</h2>
+    <p>
+      আমাদের এই অ্যাপটি বিশেষভাবে তৈরি করা হয়েছে পশ্চিমবঙ্গের প্রতিযোগিতামূলক পরীক্ষার (যেমন- WBP, KP ইত্যাদি) পরীক্ষার্থীদের জন্য। এখানে আপনি খুব সহজে এবং স্মার্ট উপায়ে পড়াশোনা করার সমস্ত প্রয়োজনীয় ডিজিটাল উপাদান এক ছাদের নিচে পেয়ে যাবেন।
+    </p>
+    <ul class="feature-list">
+      <li>স্মার্ট মক-টেস্ট এবং ইনস্ট্যান্ট রেজাল্ট</li>
+      <li>অধ্যায়ভিত্তিক সিলেবাস এবং গুরুত্বপূর্ণ নোটিশ আপডেট</li>
+      <li>দ্রুত নেভিগেশন ও ব্যবহারবান্ধব (User-Friendly) ইন্টারফেস</li>
+    </ul>
+  </div>
+
+  <!-- 3. About Learning -->
+  <div class="about-card">
+    <h2>🎯 About Learning</h2>
+    <p>
+      আমরা গতানুগতিক মুখস্থ বিদ্যার বদলে সহজ শর্ট ট্রিকস (Short Tricks), লজিক্যাল কনসেপ্ট এবং ভিজ্যুয়াল লার্নিংয়ের ওপর জোর দিই। আমাদের মূল লক্ষ্য হলো কঠিন বিষয়গুলোকে বাংলা ভাষায় এমনভাবে উপস্থাপন করা যাতে প্রতিটি সাধারণ ঘরের শিক্ষার্থী কোনো কোচিং ছাড়াই নিজের ঘর থেকে সফলতার প্রস্তুতি নিতে পারে।
+    </p>
+  </div>
+
+  <!-- 4. About Classes -->
+  <div class="about-card">
+    <h2>📚 About Classes</h2>
+    <p>
+      আমাদের ক্লাসে প্রতিটি বিষয় একদম শূন্য থেকে বেসিক লেভেল থেকে শুরু করে অ্যাডভান্সড লেভেল পর্যন্ত কভার করা হয়।
+    </p>
+    <ul class="feature-list">
+      <li>নিয়মিত লাইভ ও রেকর্ডড ক্লাস</li>
+      <li>পরীক্ষামুখী প্রশ্ন ও মক টেস্ট আলোচনা</li>
+      <li>প্রতিটি ক্লাসের পিডিএফ স্টাডি মেটিরিয়াল</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+
+<div class="row">
+
+  <div class="col">
+    <img src="logo.png" class="logo" alt="Logo">
+    <p>Improve your Skills and</p>
+    <p><font color="yellow">Learn something new</font></p>
+  </div>
+
+  <div class="col">
+    <h3>OFFICE<div class="underline"><span></span></div></h3>
+    <p><img src="location.png" class="location" alt=""> Siliguri More</p>
+    <p>Raiganj, Near Bank of Baroda</p>
+    <p>Uttar Dinajpur, West Bengal,</p>
+    <p>Pin-733134, India</p>
+  </div>
+
+  <div class="col">
+    <h3>CONTACT<div class="underline"><span></span></div></h3>
+    <p>Name- Sujit Barman</p>
+    <p><img src="phone.png" class="mobile" alt=""> +91 5234595250</p>
+    <p>Helpline No. - 188079326131</p>
+    <p><img src="message.png" class="email" alt=""> sujitbar44@gmail.com</p>
+  </div>
+
+  <div class="col">
+    <h3>FOLLOW<div class="underline"><span></span></div></h3>
+
+    <a href="https://youtube.com/@bhujpurisdon?si=FPFCghUTy-Lmceax">
+      <img class="youtube" src="youtube.png" alt="YouTube">
+    </a>
+
+    <a href="https://www.facebook.com/share/1YBSWHHgi2/">
+      <img class="youtube" src="facebook.png" alt="Facebook">
+    </a>
+
+    <a href="#"><img class="youtube" src="Instagram.png" alt="Instagram"></a>
+
+    <a href="https://whatsapp.com/channel/0029VbAMiLS4SpkAcNz3He3E">
+      <img class="youtube" src="whatsapp.png" alt="WhatsApp">
+    </a>
+
+    <a href="#"><img class="youtube" src="email.png" alt="Email"></a>
+  </div>
+
+</div>
+
+<br>
+
+<center>
+  <hr style="border:1px dotted yellow;margin-top:-10px;width:83%;">
+  <p class="copyright">&#169 Copyright @2026 All Right Reserve West Bengal, India</p>
+</center>
+
+<br>
+
+<center>
+  D<sub>e</sub> V<sup>e</sup> <mark>L<sub>o</sub> V<sup>e</sup></mark>
+  <br>by &#11015;<br><br>
+
+  <font size="5" color="red">&#10083;</font>&#160;
+  <font face="sans-serif" size="7" color="orange">S</font>ujit &#160;&#10133;
+  <font face="sans-serif" size="6" color="red">B</font>arman
+  &#160;<font size="5" color="red">&#10083;</font>
+</center>
+
+</footer>
+
+</body>
+</html>
