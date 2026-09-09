@@ -346,6 +346,47 @@ footer{
   text-align: center;
   padding-bottom: 20px;
 }
+
+#preloader {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: #1e1e1e;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   z-index: 9999;
+   }
+   
+   .loader-circle {
+   width: 50px;
+   height: 50px;
+   border: 5px solid #333;
+   border-top: 5px solid orange;
+   border-radius: 50%;
+   animation: spin 1s linear infinite;
+   }
+   
+   #preloader p {
+   color: white;
+   margin-top: 15px;
+   font-family: sans-serif;
+   letter-spacing: 2px;
+   font-size: 18px;
+   }
+   
+   @keyframes spin {
+   0% {
+   transform: rotate(0deg);
+   }
+   
+   100% {
+   transform: rotate(360deg);
+   }
+   }
 </style>
 </head>
 
@@ -496,7 +537,18 @@ footer{
   &#160;<font size="5" color="red">&#10083;</font>
 </center>
 
+
+<div id="preloader">
+   <div class="loader-circle"></div>
+   <p>Please wait...</p>
+   </div>
 </footer>
 
 </body>
 </html>
+
+<script>
+    window.onload = function() {
+    document.getElementById("preloader").style.display = "none";
+    };
+    </script>
