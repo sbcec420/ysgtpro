@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
+
+<title>Class Update | Team Sujit Barman</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#faf7ff;
+    color:#563789;
+}
+
+
+/* =========================
+   MAIN SCREEN
+========================= */
+
+.screen{
+    width:100%;
+    height:100dvh;
+
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f1e5ff 0%,
+            #fff9fc 48%,
+            #f0eaff 100%
+        );
+}
+
+
+/* =========================
+   BACKGROUND BLOBS
+========================= */
+
+.blob{
+    position:absolute;
+    border-radius:50%;
+    pointer-events:none;
+}
+
+.blob.one{
+    width:280px;
+    height:280px;
+
+    left:-140px;
+    top:-90px;
+
+    background:#d1afff;
+}
+
+.blob.two{
+    width:240px;
+    height:240px;
+
+    right:-120px;
+    top:130px;
+
+    background:#ffc5e2;
+}
+
+.blob.three{
+    width:270px;
+    height:270px;
+
+    left:-120px;
+    bottom:-150px;
+
+    background:#d6c6ff;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    position:relative;
+    z-index:5;
+
+    width:min(94%,430px);
+    height:100%;
+
+    padding:18px 0 48px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+}
+
+
+/* =========================
+   TOP
+========================= */
+
+.top{
+    width:100%;
+    text-align:center;
+}
+
+
+/* =========================
+   ICON
+========================= */
+
+.icon{
+
+    width:82px;
+    height:82px;
+
+    margin:0 auto 10px;
+
+    border-radius:25px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:41px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #a05be8,
+            #6e3db4
+        );
+
+    box-shadow:
+        0 13px 26px
+        rgba(110,61,180,.25);
+
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+h1{
+
+    color:white;
+
+    text-align:center;
+
+    font-size:39px;
+
+    line-height:.95;
+
+    font-weight:800;
+
+    text-shadow:
+        0 3px 0 #58339a;
+}
+
+
+.highlight{
+
+    display:block;
+
+    margin-top:9px;
+
+    padding:9px 12px;
+
+    border-radius:15px;
+
+    border:3px solid white;
+
+    background:
+        linear-gradient(
+            #ee6bab,
+            #d84487
+        );
+
+    box-shadow:
+        0 5px #b82f6d,
+        0 10px 18px
+        rgba(210,60,130,.20);
+
+    font-size:23px;
+
+    text-shadow:
+        0 2px #a72d63;
+}
+
+
+/* =========================
+   STATUS CARD
+========================= */
+
+.card{
+
+    width:100%;
+
+    padding:17px;
+
+    border-radius:23px;
+
+    background:
+        rgba(255,255,255,.92);
+
+    box-shadow:
+        0 12px 30px
+        rgba(80,50,120,.09);
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+
+    width:70px;
+    min-width:70px;
+
+    height:70px;
+
+    border-radius:17px;
+
+    background:white;
+
+    overflow:hidden;
+
+    text-align:center;
+
+    box-shadow:
+        0 7px 16px
+        rgba(80,50,120,.10);
+}
+
+.status-top{
+
+    background:#8752cf;
+
+    color:white;
+
+    font-size:7px;
+
+    font-weight:800;
+
+    padding:5px;
+}
+
+.check{
+
+    color:#7543ba;
+
+    font-size:30px;
+
+    line-height:35px;
+
+    font-weight:800;
+}
+
+.status-bottom{
+
+    color:#8c7b9f;
+
+    font-size:7px;
+
+    font-weight:700;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message h2{
+
+    color:#9a8aa9;
+
+    font-size:8px;
+
+    font-weight:700;
+
+    margin-bottom:4px;
+}
+
+.message p{
+
+    color:#5b3b91;
+
+    font-size:12px;
+
+    line-height:1.5;
+
+    font-weight:600;
+}
+
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.description{
+
+    width:95%;
+
+    text-align:center;
+
+    color:#70637e;
+
+    font-size:9px;
+
+    line-height:1.65;
+}
+
+.description strong{
+
+    color:#7542b8;
+}
+
+
+/* =========================
+   UPDATE BOX
+========================= */
+
+.update-box{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border-radius:20px;
+
+    background:
+        rgba(255,255,255,.90);
+
+    box-shadow:
+        0 8px 22px
+        rgba(80,50,120,.07);
+
+    text-align:center;
+}
+
+.update-icon{
+
+    font-size:23px;
+
+    margin-bottom:3px;
+}
+
+.update-box p{
+
+    color:#624a7f;
+
+    font-size:10px;
+
+    line-height:1.5;
+
+    font-weight:600;
+}
+
+
+/* =========================
+   PATIENCE
+========================= */
+
+.patience{
+
+    width:100%;
+
+    padding:12px;
+
+    border-radius:19px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            #ffe45a,
+            #ffd02b
+        );
+
+    color:#625116;
+
+    font-size:10px;
+
+    font-weight:800;
+
+    box-shadow:
+        0 5px #dda900;
+}
+
+
+/* =========================
+   THANK YOU
+========================= */
+
+.thank{
+
+    width:100%;
+
+    padding-top:9px;
+
+    text-align:center;
+
+    border-top:
+        2px dashed
+        rgba(90,60,130,.15);
+}
+
+.heart{
+
+    color:#e93670;
+
+    font-size:23px;
+
+    line-height:20px;
+}
+
+.thank h2{
+
+    color:#59378e;
+
+    font-size:27px;
+
+    font-weight:800;
+
+    line-height:1.1;
+}
+
+.thank h2 span{
+
+    color:#ed3e61;
+}
+
+.thank p{
+
+    color:#766b84;
+
+    font-size:8px;
+
+    line-height:1.5;
+}
+
+.team{
+
+    color:#7441b4!important;
+
+    font-size:10px!important;
+
+    margin-top:6px;
+
+    font-weight:700;
+}
+
+
+/* =========================
+   BOTTOM WAVES
+========================= */
+
+.waves{
+
+    position:absolute;
+
+    left:-5%;
+    bottom:0;
+
+    width:110%;
+    height:45px;
+
+    z-index:3;
+}
+
+.wave1{
+
+    position:absolute;
+
+    width:120%;
+    height:40px;
+
+    left:-10%;
+    bottom:-25px;
+
+    background:#d754c8;
+
+    border-radius:
+        50% 50% 0 0;
+}
+
+.wave2{
+
+    position:absolute;
+
+    width:120%;
+    height:30px;
+
+    left:-10%;
+    bottom:-25px;
+
+    background:#7040b1;
+
+    border-radius:
+        50% 50% 0 0;
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media(max-height:650px){
+
+    .content{
+        padding-top:8px;
+        padding-bottom:43px;
+    }
+
+    .icon{
+
+        width:65px;
+        height:65px;
+
+        font-size:32px;
+
+        margin-bottom:6px;
+    }
+
+    h1{
+        font-size:34px;
+    }
+
+    .highlight{
+        font-size:21px;
+        padding:6px 10px;
+    }
+
+    .card{
+        padding:12px;
+    }
+
+    .description{
+        font-size:8px;
+    }
+
+    .update-box{
+        padding:9px;
+    }
+
+    .patience{
+        padding:8px;
+    }
+
+    .thank h2{
+        font-size:23px;
+    }
+}
+
+
+/* =========================
+   VERY SMALL SCREEN
+========================= */
+
+@media(max-height:560px){
+
+    .description{
+        display:none;
+    }
+
+    .update-box{
+        padding:7px;
+    }
+
+    .update-icon{
+        font-size:18px;
+    }
+
+    .thank{
+        padding-top:5px;
+    }
+
+    .thank h2{
+        font-size:21px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="screen">
+
+
+    <!-- Background -->
+
+    <div class="blob one"></div>
+    <div class="blob two"></div>
+    <div class="blob three"></div>
+
+
+    <main class="content">
+
+
+        <!-- TOP -->
+
+        <section class="top">
+
+            <div class="icon">
+                📚
+            </div>
+
+
+            <h1>
+
+                THIS CLASS
+
+                <span class="highlight">
+                    WILL BE UPDATED SOON...
+                </span>
+
+            </h1>
+
+        </section>
+
+
+        <!-- STATUS -->
+
+        <section class="card">
+
+
+            <div class="status">
+
+                <div class="status-top">
+                    STATUS
+                </div>
+
+                <div class="check">
+                    ✓
+                </div>
+
+                <div class="status-bottom">
+                    UPDATING
+                </div>
+
+            </div>
+
+
+            <div class="message">
+
+                <h2>
+                    CURRENT STATUS
+                </h2>
+
+                <p>
+                    This class is currently being updated.
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- DESCRIPTION -->
+
+        <p class="description">
+
+            We're currently working behind the scenes
+            to bring you
+            <strong>new classes</strong>
+            and an
+            <strong>improved learning experience.</strong>
+
+            Please wait while the update is completed.
+
+        </p>
+
+
+        <!-- UPDATE MESSAGE -->
+
+        <div class="update-box">
+
+            <div class="update-icon">
+                🛠️
+            </div>
+
+            <p>
+                Your patience is greatly appreciated
+                while we work on the update.
+            </p>
+
+        </div>
+
+
+        <!-- PATIENCE -->
+
+        <div class="patience">
+
+            😊 &nbsp;
+            Thank you for your patience!
+
+        </div>
+
+
+        <!-- THANK YOU -->
+
+        <section class="thank">
+
+            <div class="heart">
+                ♥
+            </div>
+
+            <h2>
+                Thank You <span>❤️</span>
+            </h2>
+
+            <p>
+                For your patience, support & understanding
+            </p>
+
+            <p class="team">
+                Team Sujit Barman
+            </p>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- Bottom -->
+
+    <div class="waves">
+
+        <div class="wave1"></div>
+
+        <div class="wave2"></div>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>
